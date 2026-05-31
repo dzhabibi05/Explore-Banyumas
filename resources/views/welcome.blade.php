@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Eksplorasi Banyumas</title>
+    <title>Eksplore Banyumas</title>
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     <!-- Google Fonts - Happy Monkey -->
@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Happy+Monkey&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         /* Custom scroll smooth */
         html { scroll-behavior: smooth; }
@@ -18,18 +19,17 @@
 </head>
 <body class="min-h-screen bg-white font-sans text-slate-800 pb-20 relative overflow-x-hidden">
 
-    <nav class="absolute w-full bg-transparent z-50 transition-all duration-300 pt-4">
+    <nav class="absolute w-full top-0 left-0 z-50 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center bg-white/90 backdrop-blur-md rounded-full px-4 sm:px-6 shadow-sm">
+            <div class="flex justify-between h-20 items-center bg-white rounded-b-[2.5rem] px-6 sm:px-8 shadow-lg">
                 <div class="flex items-center gap-3">
-                    <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-12 w-auto" />
-                    <span class="font-bold text-lg tracking-tight text-green-900 hidden sm:inline">BanyumasExplore</span>
+                    <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-14 w-auto" />
                 </div>
                 
-                <div class="flex items-center gap-2 sm:gap-4 text-xs sm:text-sm font-bold">
+                <div class="flex items-center gap-4 sm:gap-6 text-sm sm:text-base font-bold">
                     @if (Route::has('login'))
                         @auth
-                            <a href="{{ url('/dashboard') }}" class="text-green-700 hover:text-green-800">Dashboard</a>
+                            <a href="{{ url('/dashboard') }}" class="border border-green-700 text-green-700 px-3 py-1.5 sm:px-5 sm:py-2 rounded-full hover:bg-green-700 hover:text-white transition">Dashboard</a>
                         @else
                             <a href="{{ route('login') }}" class="border border-green-700 text-green-700 px-3 py-1.5 sm:px-5 sm:py-2 rounded-full hover:bg-green-700 hover:text-white transition">Masuk</a>
                             @if (Route::has('register'))
@@ -46,9 +46,9 @@
         <img src="{{ asset('images/landscape.jpeg') }}" alt="Pemandangan" class="absolute inset-0 w-full h-full object-cover object-center"/>
         <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent"></div>
         
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center">
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center" data-aos="fade-up" data-aos-duration="1000">
             <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight mb-2 drop-shadow-lg leading-tight uppercase">
-                Jelajahi Keindahan <br /> Alam Banyumas
+                Jelajahi Keindahan <br /> Wisata Banyumas
             </h1>
             <p class="text-white/90 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 tracking-wide font-light">TEMUKAN PESONA HIJAU DI JAWA TENGAH</p>
             <div>
@@ -61,13 +61,13 @@
 
     <div id="destinasi" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative">
         
-        <div class="text-center mb-10">
+        <div class="text-center mb-10" data-aos="fade-up">
             <div class="inline-block border border-green-200 rounded-full px-6 py-2 mb-6">
                 <h2 class="text-xl font-bold text-green-800">Jelajahi Banyumas</h2>
                 <p class="text-xs text-green-600">Eksplorasi manual destinasi pilihan yang tersedia di sistem kami.</p>
             </div>
 
-            <div class="flex flex-wrap justify-center gap-2 sm:gap-3">
+            <div class="flex flex-wrap justify-center gap-2 sm:gap-3" data-aos="fade-up" data-aos-delay="100">
                 <a href="{{ url('/#destinasi') }}" class="px-3 py-1.5 sm:px-5 sm:py-2 rounded-full text-xs sm:text-sm font-bold transition border {{ !request('kategori') ? 'bg-green-700 border-green-700 text-white shadow-md' : 'bg-white border-green-700 text-green-700 hover:bg-green-50' }}">
                     Semua Wisata
                 </a>
@@ -86,7 +86,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-12 px-4 md:px-10">
             @if(isset($destinasi) && $destinasi->count() > 0)
                 @foreach($destinasi as $item)
-                    <div class="bg-white rounded-tr-[5.5rem] rounded-bl-[5.5rem] rounded-tl-[1rem] rounded-br-[1rem] shadow-[0_15px_35px_rgba(0,0,0,0.08)] border border-slate-100 flex flex-col items-center p-4 h-full transition duration-300 hover:-translate-y-2 hover:shadow-2xl cursor-pointer">
+                    <div class="bg-white rounded-tr-[5.5rem] rounded-bl-[5.5rem] rounded-tl-[1rem] rounded-br-[1rem] shadow-[0_15px_35px_rgba(0,0,0,0.08)] border border-slate-100 flex flex-col items-center p-4 h-full transition duration-300 hover:-translate-y-2 hover:shadow-2xl cursor-pointer" data-aos="fade-up" data-aos-delay="{{ $loop->iteration * 100 }}">
                         
                         <div class="w-full h-48 overflow-hidden rounded-tr-[4.5rem] rounded-bl-[4.5rem] rounded-tl-[0.5rem] rounded-br-[0.5rem] relative group shadow-inner">
                             <img src="{{ $item->foto ? asset('storage/'.$item->foto) : 'https://images.unsplash.com/photo-1596401057633-54a8fe8ef647?q=80&w=600&auto=format&fit=crop' }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="{{ $item->nama_wisata }}" />
@@ -113,7 +113,7 @@
         </div>
     </div>
 
-    <div class="my-10 w-full overflow-hidden flex justify-center">
+    <div class="my-10 w-full overflow-hidden flex justify-center" data-aos="fade-up">
         <img src="{{ asset('images/bambu.png') }}" alt="Ornamen Bambu" class="w-full h-auto object-cover opacity-90" />
     </div>
 
@@ -123,11 +123,11 @@
         <img src="{{ asset('images/daun-kiri-bawah.png') }}" alt="Ornamen Daun Kiri Bawah" class="absolute bottom-0 left-0 w-32 md:w-48 h-auto pointer-events-none z-0" />
         <img src="{{ asset('images/daun-kanan-bawah.png') }}" alt="Ornamen Daun Kanan Bawah" class="absolute bottom-0 right-0 w-32 md:w-48 h-auto pointer-events-none z-0" />
 
-        <div class="text-center mb-8 relative z-10">
+        <div class="text-center mb-8 relative z-10" data-aos="fade-up">
             <h2 class="text-2xl font-black text-green-700">Mulai Pencarian Wisata</h2>
         </div>
 
-        <div class="max-w-4xl mx-auto px-4 relative z-10">
+        <div class="max-w-4xl mx-auto px-4 relative z-10" data-aos="zoom-in" data-aos-duration="1000">
             @auth
                 <div class="bg-white rounded-[2.5rem] shadow-2xl p-8 md:p-12 border border-slate-100">
                     <form action="{{ route('rekomendasi.proses') }}" method="POST">
@@ -230,6 +230,13 @@
                 alert("Browser Anda tidak mendukung Geolocation.");
             }
         }
+    </script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true,
+        });
     </script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout title="Riwayat Rekomendasi & Perhitungan TOPSIS">
     <x-slot name="header">
         <h2 class="font-bold text-2xl text-slate-800 leading-tight">
             {{ __('Riwayat Analisis TOPSIS') }}

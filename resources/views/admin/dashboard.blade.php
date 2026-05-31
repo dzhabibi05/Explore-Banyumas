@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout title="Admin Control Panel">
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-bold text-2xl text-slate-800 leading-tight">
