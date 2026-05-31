@@ -6,6 +6,10 @@
     <title>Eksplorasi Banyumas</title>
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
+    <!-- Google Fonts - Happy Monkey -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Happy+Monkey&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         /* Custom scroll smooth */
@@ -82,18 +86,18 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-12 px-4 md:px-10">
             @if(isset($destinasi) && $destinasi->count() > 0)
                 @foreach($destinasi as $item)
-                    <div class="bg-white rounded-tl-[3rem] rounded-br-[3rem] rounded-tr-xl rounded-bl-xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-slate-100 overflow-hidden relative flex flex-col items-center p-3 transition hover:-translate-y-1 hover:shadow-xl cursor-pointer">
+                    <div class="bg-white rounded-tr-[5.5rem] rounded-bl-[5.5rem] rounded-tl-[1rem] rounded-br-[1rem] shadow-[0_15px_35px_rgba(0,0,0,0.08)] border border-slate-100 flex flex-col items-center p-4 h-full transition duration-300 hover:-translate-y-2 hover:shadow-2xl cursor-pointer">
                         
-                        <div class="w-full h-44 overflow-hidden rounded-tl-[2.5rem] rounded-br-[2.5rem] rounded-tr-lg rounded-bl-lg relative group">
+                        <div class="w-full h-48 overflow-hidden rounded-tr-[4.5rem] rounded-bl-[4.5rem] rounded-tl-[0.5rem] rounded-br-[0.5rem] relative group shadow-inner">
                             <img src="{{ $item->foto ? asset('storage/'.$item->foto) : 'https://images.unsplash.com/photo-1596401057633-54a8fe8ef647?q=80&w=600&auto=format&fit=crop' }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="{{ $item->nama_wisata }}" />
                         </div>
-
-                        <div class="bg-green-800 text-white font-bold text-xs px-5 py-1.5 rounded-full absolute top-[170px] border-4 border-white shadow-sm shadow-green-900/20 text-center max-w-[80%] line-clamp-1">
-                            {{ $item->nama_wisata }}
+ 
+                        <div class="bg-[#457C1A] text-white font-bold text-sm sm:text-base px-6 py-2 rounded-tr-[1.2rem] rounded-bl-[1.2rem] rounded-tl-[0.3rem] rounded-br-[0.3rem] shadow-md text-center mt-4 mb-3 max-w-[90%] truncate overflow-hidden">
+                            {{ \Illuminate\Support\Str::words($item->nama_wisata, 3, '...') }}
                         </div>
-
-                        <div class="pt-8 pb-4 px-2 text-center flex-1 flex flex-col justify-start">
-                            <p class="text-xs text-green-800/80 font-medium line-clamp-2 leading-relaxed">
+ 
+                        <div class="px-2 pb-2 text-center flex-1 flex flex-col justify-center">
+                            <p class="text-xs sm:text-sm text-[#008404] font-bold leading-relaxed" style="font-family: 'Happy Monkey', system-ui; font-weight: bold;">
                                 {{ $item->deskripsi }}
                             </p>
                         </div>
