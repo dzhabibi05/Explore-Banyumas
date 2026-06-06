@@ -6,10 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Penilaian extends Model
 {
-    protected $fillable = ['nama_wisata', 'deskripsi', 'kategori', 'latitude', 'longitude'];
+    protected $fillable = [
+        'wisata_id',
+        'kriteria_id',
+        'nilai',
+    ];
 
-    public function penilaian()
+    public function wisata()
     {
-        return $this->hasMany(Penilaian::class);
+        return $this->belongsTo(Wisata::class);
+    }
+
+    public function kriteria()
+    {
+        return $this->belongsTo(Kriteria::class);
     }
 }

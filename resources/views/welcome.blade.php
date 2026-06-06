@@ -3,10 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Eksplore Banyumas</title>
-    <!-- Favicon -->
+    <title>Explore Banyumas</title>
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
-    <!-- Google Fonts - Happy Monkey -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Happy+Monkey&display=swap" rel="stylesheet">
@@ -42,75 +40,89 @@
         </div>
     </nav>
 
-    <div class="relative w-full h-[600px] rounded-b-[4rem] overflow-hidden shadow-2xl">
+    <div class="relative w-full h-[450px] md:h-[550px] rounded-b-[3rem] md:rounded-b-[5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] z-20">
         <img src="{{ asset('images/landscape.jpeg') }}" alt="Pemandangan" class="absolute inset-0 w-full h-full object-cover object-center"/>
-        <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent"></div>
         
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center" data-aos="fade-up" data-aos-duration="1000">
-            <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight mb-2 drop-shadow-lg leading-tight uppercase">
-                Jelajahi Keindahan <br /> Wisata Banyumas
+        <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center pt-10" data-aos="fade-right" data-aos-duration="1000">
+            <h1 class="text-3xl md:text-5xl lg:text-6xl font-black text-white tracking-tight mb-2 drop-shadow-lg leading-tight uppercase">
+                Jelajahi Keindahan <br /> Alam Banyumas
             </h1>
-            <p class="text-white/90 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 tracking-wide font-light">TEMUKAN PESONA HIJAU DI JAWA TENGAH</p>
+            <p class="text-white/80 text-xs md:text-sm lg:text-base mb-8 tracking-widest font-light uppercase">
+                Temukan Pesona Hijau di Jawa Tengah
+            </p>
             <div>
-                <a href="#destinasi" class="bg-green-600 text-white px-6 py-2.5 sm:px-8 sm:py-3 rounded-full font-bold hover:bg-green-700 transition shadow-lg shadow-green-900/50 text-sm sm:text-base">
+                <a href="#destinasi" class="bg-[#15803d] text-white px-8 py-3 rounded-full font-bold hover:bg-[#166534] transition shadow-lg text-sm uppercase tracking-wider inline-block">
                     Mulai Jelajah!
                 </a>
             </div>
         </div>
     </div>
 
-    <div id="destinasi" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative">
+    <div class="w-full relative h-0 z-30 pointer-events-none max-w-7xl mx-auto">
+        <img src="{{ asset('images/daun-kiri-atas.png') }}" alt="Ornamen Daun Kiri" class="absolute -top-12 left-0 w-32 md:w-48 lg:w-56 transform -translate-x-4 object-contain drop-shadow-xl" data-aos="fade-right" data-aos-delay="200" />
+        
+        <img src="{{ asset('images/daun-kanan-atas.png') }}" alt="Ornamen Daun Kanan" class="absolute -top-24 right-0 w-24 md:w-36 lg:w-48 transform translate-x-2 object-contain drop-shadow-xl" data-aos="fade-left" data-aos-delay="400" />
+    </div>
+
+    <div id="destinasi" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-20 relative z-10">
         
         <div class="text-center mb-10" data-aos="fade-up">
-            <div class="inline-block border border-green-200 rounded-full px-6 py-2 mb-6">
-                <h2 class="text-xl font-bold text-green-800">Jelajahi Banyumas</h2>
-                <p class="text-xs text-green-600">Eksplorasi manual destinasi pilihan yang tersedia di sistem kami.</p>
+            <div class="inline-block border border-green-200 rounded-full px-8 py-2 mb-6 shadow-sm bg-white">
+                <h2 class="text-xl md:text-2xl font-bold text-green-800">Jelajahi Banyumas</h2>
+                <p class="text-[10px] md:text-xs text-green-600 tracking-wider">Eksplorasi manual destinasi pilihan yang tersedia di sistem kami</p>
             </div>
 
-            <div class="flex flex-wrap justify-center gap-2 sm:gap-3" data-aos="fade-up" data-aos-delay="100">
-                <a href="{{ url('/#destinasi') }}" class="px-3 py-1.5 sm:px-5 sm:py-2 rounded-full text-xs sm:text-sm font-bold transition border {{ !request('kategori') ? 'bg-green-700 border-green-700 text-white shadow-md' : 'bg-white border-green-700 text-green-700 hover:bg-green-50' }}">
+            <div class="flex flex-wrap justify-center gap-3">
+                <a href="{{ url('/#destinasi') }}" class="px-5 py-2 rounded-full text-xs md:text-sm font-bold transition border {{ !request('kategori') ? 'bg-green-700 border-green-700 text-white shadow-md' : 'bg-white border-green-700 text-green-700 hover:bg-green-50' }}">
                     Semua Wisata
                 </a>
-                <a href="{{ url('/?kategori=Alam#destinasi') }}" class="px-3 py-1.5 sm:px-5 sm:py-2 rounded-full text-xs sm:text-sm font-bold transition border {{ request('kategori') === 'Alam' ? 'bg-green-700 border-green-700 text-white shadow-md' : 'bg-white border-green-700 text-green-700 hover:bg-green-50' }}">
+                <a href="{{ url('/?kategori=Alam#destinasi') }}" class="px-5 py-2 rounded-full text-xs md:text-sm font-bold transition border {{ request('kategori') === 'Alam' ? 'bg-green-700 border-green-700 text-white shadow-md' : 'bg-white border-green-700 text-green-700 hover:bg-green-50' }}">
                     Wisata Alam
                 </a>
-                <a href="{{ url('/?kategori=Buatan#destinasi') }}" class="px-3 py-1.5 sm:px-5 sm:py-2 rounded-full text-xs sm:text-sm font-bold transition border {{ request('kategori') === 'Buatan' ? 'bg-green-700 border-green-700 text-white shadow-md' : 'bg-white border-green-700 text-green-700 hover:bg-green-50' }}">
+                <a href="{{ url('/?kategori=Buatan#destinasi') }}" class="px-5 py-2 rounded-full text-xs md:text-sm font-bold transition border {{ request('kategori') === 'Buatan' ? 'bg-green-700 border-green-700 text-white shadow-md' : 'bg-white border-green-700 text-green-700 hover:bg-green-50' }}">
                     Wisata Buatan
                 </a>
-                <a href="{{ url('/?kategori=Budaya#destinasi') }}" class="px-3 py-1.5 sm:px-5 sm:py-2 rounded-full text-xs sm:text-sm font-bold transition border {{ request('kategori') === 'Budaya' ? 'bg-green-700 border-green-700 text-white shadow-md' : 'bg-white border-green-700 text-green-700 hover:bg-green-50' }}">
+                <a href="{{ url('/?kategori=Budaya#destinasi') }}" class="px-5 py-2 rounded-full text-xs md:text-sm font-bold transition border {{ request('kategori') === 'Budaya' ? 'bg-green-700 border-green-700 text-white shadow-md' : 'bg-white border-green-700 text-green-700 hover:bg-green-50' }}">
                     Wisata Budaya & Sejarah
                 </a>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-12 px-4 md:px-10">
-            @if(isset($destinasi) && $destinasi->count() > 0)
-                @foreach($destinasi as $item)
-                    <div class="bg-white rounded-tr-[5.5rem] rounded-bl-[5.5rem] rounded-tl-[1rem] rounded-br-[1rem] shadow-[0_15px_35px_rgba(0,0,0,0.08)] border border-slate-100 flex flex-col items-center p-4 h-full transition duration-300 hover:-translate-y-2 hover:shadow-2xl cursor-pointer" data-aos="fade-up" data-aos-delay="{{ $loop->iteration * 100 }}">
-                        
-                        <div class="w-full h-48 overflow-hidden rounded-tr-[4.5rem] rounded-bl-[4.5rem] rounded-tl-[0.5rem] rounded-br-[0.5rem] relative group shadow-inner">
-                            <img src="{{ $item->foto ? asset('storage/'.$item->foto) : 'https://images.unsplash.com/photo-1596401057633-54a8fe8ef647?q=80&w=600&auto=format&fit=crop' }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="{{ $item->nama_wisata }}" />
-                        </div>
- 
-                        <div class="bg-[#457C1A] text-white font-bold text-sm sm:text-base px-6 py-2 rounded-tr-[1.2rem] rounded-bl-[1.2rem] rounded-tl-[0.3rem] rounded-br-[0.3rem] shadow-md text-center mt-4 mb-3 max-w-[90%] truncate overflow-hidden">
-                            {{ \Illuminate\Support\Str::words($item->nama_wisata, 3, '...') }}
-                        </div>
- 
-                        <div class="px-2 pb-2 text-center flex-1 flex flex-col justify-center">
-                            <p class="text-xs sm:text-sm text-[#008404] font-bold leading-relaxed" style="font-family: 'Happy Monkey', system-ui; font-weight: bold;">
-                                {{ $item->deskripsi }}
-                            </p>
-                        </div>
-                    </div>
-                @endforeach
-            @else
-                <div class="col-span-full text-center text-slate-500 py-10">Belum ada data wisata.</div>
-            @endif
-        </div>
+        <div class="relative max-w-5xl mx-auto mt-12">
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-12 px-4 md:px-8 relative z-40">
+                @if(isset($destinasi) && $destinasi->count() > 0)
+                    @foreach($destinasi as $item)
+                        <div class="bg-white rounded-tr-[5rem] rounded-bl-[5rem] rounded-tl-[1.5rem] rounded-br-[1.5rem] shadow-[0_15px_35px_rgba(0,0,0,0.06)] border border-slate-100 flex flex-col items-center p-3 h-full transition duration-300 hover:-translate-y-2 hover:shadow-2xl cursor-pointer" data-aos="fade-up" data-aos-delay="{{ $loop->iteration * 100 }}">
+                            
+                            <div class="w-full h-44 overflow-hidden rounded-tr-[4.5rem] rounded-bl-[4.5rem] rounded-tl-[1rem] rounded-br-[1rem] relative group shadow-sm bg-slate-100">
+                                <img src="{{ $item->foto ? asset('storage/'.$item->foto) : 'https://images.unsplash.com/photo-1596401057633-54a8fe8ef647?q=80&w=600&auto=format&fit=crop' }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="{{ $item->nama_wisata }}" />
+                            </div>
 
-        <div class="mt-12 flex justify-center">
-            {{ $destinasi->fragment('destinasi')->links() }}
+                            <div class="bg-[#2a6813] text-white font-extrabold text-sm px-6 py-1.5 rounded-tr-[1rem] rounded-bl-[1rem] rounded-tl-[0.25rem] rounded-br-[0.25rem] shadow-md text-center -mt-4 mb-3 max-w-[85%] relative z-10 uppercase tracking-wide">
+                                {{ \Illuminate\Support\Str::words($item->nama_wisata, 4, '...') }}
+                            </div>
+
+                            <div class="px-4 pb-4 text-center flex-1 flex flex-col justify-start w-full">
+                                <p class="text-[11px] md:text-xs text-[#2a6813] font-normal leading-relaxed text-center" style="font-family: 'Happy Monkey', cursive;">
+                                    {{ $item->deskripsi }}
+                                </p>
+                            </div>
+                        </div>
+                    @endforeach
+                @else
+                    <div class="col-span-full text-center text-slate-500 py-10">Belum ada data wisata.</div>
+                @endif
+            </div>
+
+            <div class="mt-12 flex justify-center relative z-50 px-4">
+                {{ $destinasi->fragment('destinasi')->links() }}
+            </div>
+
         </div>
+    
     </div>
 
     <div class="my-10 w-full overflow-hidden flex justify-center" data-aos="fade-up">
@@ -119,7 +131,6 @@
 
     <div class="py-16 relative overflow-hidden">
         
-        <!-- Ornamen Daun di Sudut-Sudut -->
         <img src="{{ asset('images/daun-kiri-bawah.png') }}" alt="Ornamen Daun Kiri Bawah" class="absolute bottom-0 left-0 w-32 md:w-48 h-auto pointer-events-none z-0" />
         <img src="{{ asset('images/daun-kanan-bawah.png') }}" alt="Ornamen Daun Kanan Bawah" class="absolute bottom-0 right-0 w-32 md:w-48 h-auto pointer-events-none z-0" />
 
@@ -129,70 +140,80 @@
 
         <div class="max-w-4xl mx-auto px-4 relative z-10" data-aos="zoom-in" data-aos-duration="1000">
             @auth
-                <div class="bg-white rounded-[2.5rem] shadow-2xl p-8 md:p-12 border border-slate-100">
+                <div class="bg-[#4A7D29] rounded-[2rem] shadow-2xl p-8 md:p-12 border border-green-800/20 mx-auto max-w-4xl relative overflow-hidden">
                     <form action="{{ route('rekomendasi.proses') }}" method="POST">
                         @csrf
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                            <div class="col-span-2">
-                                <label class="block text-sm font-bold text-slate-700 mb-1">Nama Lengkap</label>
-                                <input type="text" name="nama" class="w-full rounded-xl border-slate-300 bg-slate-50 focus:ring-green-600 focus:border-green-600" placeholder="Masukkan nama..." required>
+                        <div class="flex flex-col gap-6">
+                            
+                            <div>
+                                <label class="block text-sm font-bold text-white mb-2 ml-2 tracking-wide">Nama Lengkap</label>
+                                <input type="text" name="nama" 
+                                    value="{{ Auth::user()->name }}" 
+                                    class="w-full rounded-full border-none py-3 px-5 text-sm text-slate-700 shadow-inner focus:ring-4 focus:ring-green-400 focus:outline-none" 
+                                    placeholder="Masukkan nama Anda..." 
+                                    required>
                             </div>
                             
-                            <div class="col-span-2 bg-green-50/50 p-5 rounded-2xl border border-green-100">
-                                <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2 mb-4">
-                                    <label class="block text-sm font-bold text-green-800">Deteksi Titik Koordinat</label>
-                                    <button type="button" id="btn-lokasi" onclick="lacakLokasi()" class="bg-green-700 hover:bg-green-800 text-white text-xs px-4 py-2 rounded-full font-bold transition shadow-md w-full sm:w-auto text-center">
-                                        📍 Lacak Lokasi
+                            <div class="bg-[#6B9E40]/90 rounded-3xl p-6 md:p-8 shadow-inner border border-[#85B85A]">
+                                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-5">
+                                    <label class="block text-sm font-bold text-white ml-2 tracking-wide">Deteksi Titik Koordinat</label>
+                                    <button type="button" id="btn-lokasi" onclick="lacakLokasi()" class="bg-[#2DCC2D] hover:bg-green-500 text-white text-xs px-6 py-2.5 rounded-md font-extrabold transition shadow-[0_4px_14px_0_rgba(45,204,45,0.39)] uppercase tracking-wider">
+                                        Lacak Lokasi Saya
                                     </button>
                                 </div>
-                                <div class="grid grid-cols-2 gap-4">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                                     <div>
-                                        <span class="text-xs font-bold text-green-700/70">Latitude</span>
-                                        <input type="text" id="lat" name="latitude" readonly class="w-full rounded-xl border-green-200 bg-white text-slate-600 font-mono text-sm shadow-sm" required>
+                                        <input type="text" id="lat" name="latitude" readonly class="w-full rounded-full border-none py-3 px-5 text-sm font-bold text-slate-400 bg-white/95 shadow-inner placeholder:font-normal placeholder:text-slate-300 focus:ring-0" placeholder="Deteksi Titik Koordinat" required>
                                     </div>
                                     <div>
-                                        <span class="text-xs font-bold text-green-700/70">Longitude</span>
-                                        <input type="text" id="lng" name="longitude" readonly class="w-full rounded-xl border-green-200 bg-white text-slate-600 font-mono text-sm shadow-sm" required>
+                                        <input type="text" id="lng" name="longitude" readonly class="w-full rounded-full border-none py-3 px-5 text-sm font-bold text-slate-400 bg-white/95 shadow-inner placeholder:font-normal placeholder:text-slate-300 focus:ring-0" placeholder="Deteksi Titik Koordinat" required>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-span-2 mt-2">
-                                <label class="block text-sm font-bold text-slate-700 mb-2">Kategori Minat</label>
-                                <select name="kategori" class="w-full rounded-xl border-slate-300 bg-slate-50 focus:ring-green-600 focus:border-green-600" required>
-                                    <option value="Alam">Wisata Alam</option>
-                                    <option value="Buatan">Wisata Buatan</option>
-                                    <option value="Budaya">Wisata Budaya</option>
-                                </select>
+                            <div>
+                                <label class="block text-sm font-bold text-white mb-2 ml-2 tracking-wide">Pilih Kategori Minat</label>
+                                <div class="relative">
+                                    <select name="kategori" class="w-full rounded-full border-none py-3 px-5 text-sm text-slate-400 bg-white shadow-inner focus:ring-4 focus:ring-green-400 focus:outline-none appearance-none cursor-pointer font-medium" required>
+                                        <option value="" disabled selected hidden>Pilih Kategori (Alam, Buatan, Budaya)...</option>
+                                        <option value="Alam" class="text-slate-700">Wisata Alam</option>
+                                        <option value="Buatan" class="text-slate-700">Wisata Buatan</option>
+                                        <option value="Budaya" class="text-slate-700">Wisata Budaya & Sejarah</option>
+                                    </select>
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-5 text-slate-400">
+                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                            
+                            <div class="mt-4 flex justify-center">
+                                <button type="submit" class="bg-[#F59E0B] text-white px-12 py-3.5 rounded-full font-black text-sm uppercase tracking-wider hover:bg-[#D97706] transition shadow-[0_4px_14px_0_rgba(245,158,11,0.39)]">
+                                    Proses Rekomendasi
+                                </button>
+                            </div>
 
-                        <div class="mt-8 text-center">
-                            <button type="submit" class="bg-green-600 text-white px-10 py-3 rounded-full font-black text-lg hover:bg-green-700 transition shadow-lg shadow-green-200">
-                                Proses Rekomendasi
-                            </button>
                         </div>
                     </form>
                 </div>
             @else
-                <div class="bg-[#427A21] rounded-[3rem] shadow-[0_20px_50px_rgb(66,122,33,0.3)] p-6 sm:p-10 md:p-16 text-center text-white relative overflow-hidden">
-                    <div class="mx-auto w-14 h-14 bg-green-900/30 rounded-full flex items-center justify-center mb-6 border border-green-400/30">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <div class="bg-[#4A7D29] rounded-[2rem] shadow-2xl p-6 sm:p-10 md:p-16 text-center text-white relative overflow-hidden mx-auto max-w-4xl">
+                    <div class="mx-auto w-16 h-16 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center mb-6 border border-white/20">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                         </svg>
                     </div>
                     
-                    <h3 class="font-bold text-xl md:text-2xl mb-4">Mulai Pencarian Wisata</h3>
-                    <p class="text-green-100 text-sm md:text-base max-w-lg mx-auto mb-6 sm:mb-10 leading-relaxed font-light">
+                    <h3 class="font-bold text-2xl md:text-3xl mb-4">Akses Terbatas</h3>
+                    <p class="text-green-100 text-sm md:text-base max-w-lg mx-auto mb-8 sm:mb-10 leading-relaxed font-light">
                         Silahkan masuk ke akun dahulu agar sistem dapat mendeteksi koordinat lokasi anda secara presisi dan memproses kalkulasi TOPSIS rute jalan berkendara riil.
                     </p>
                     
                     <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                        <a href="{{ route('login') }}" class="border border-[#5DB02F] text-white hover:bg-[#5DB02F] px-6 py-2.5 sm:px-10 sm:py-3 rounded-full font-bold transition hover:shadow-lg hover:shadow-green-900/50 w-full sm:w-auto text-center">
+                        <a href="{{ route('login') }}" class="border-2 border-white/50 text-white hover:bg-[#D97706] px-10 py-3 rounded-full font-bold transition shadow-lg w-full sm:w-auto text-center uppercase text-sm tracking-wider">
                             Masuk
                         </a>
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="border border-[#5DB02F] text-white hover:bg-[#5DB02F] px-6 py-2.5 sm:px-10 sm:py-3 rounded-full font-bold transition hover:shadow-lg hover:shadow-green-900/50 w-full sm:w-auto text-center">
+                            <a href="{{ route('register') }}" class="border-2 border-white/50 text-white hover:bg-[#D97706] px-10 py-2.5 rounded-full font-bold transition w-full sm:w-auto text-center uppercase text-sm tracking-wider">
                                 Daftar Akun
                             </a>
                         @endif
@@ -236,6 +257,9 @@
         AOS.init({
             duration: 800,
             once: true,
+            disable: function() {
+                return window.innerWidth < 768;
+            }
         });
     </script>
 </body>

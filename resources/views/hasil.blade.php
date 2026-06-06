@@ -28,7 +28,7 @@
             <p class="text-emerald-100 text-lg">Halo <b>{{ $namaWisatawan }}</b>, berdasarkan kalkulasi jarak dan preferensi <b>Wisata {{ $kategori }}</b>, berikut adalah daftar destinasi wisata terurut dari rekomendasi terbaik pilihan sistem.</p>
             <div class="mt-6 flex justify-center">
                 <a href="{{ route('dashboard') }}" class="bg-amber-500 hover:bg-amber-600 text-slate-900 text-sm font-extrabold px-6 py-3 rounded-full shadow-lg transition">
-                    📊 Proses Perhitungan
+                    Proses Perhitungan
                 </a>
             </div>
         </div>

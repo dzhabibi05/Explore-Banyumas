@@ -13,6 +13,7 @@ class Wisata extends Model
         'kategori',
         'latitude',
         'longitude',
+        'foto',
     ];
 
     protected static function booted(): void
@@ -23,9 +24,10 @@ class Wisata extends Model
 
     public static function clearCache(): void
     {
-        foreach (['all', 'Alam', 'Buatan', 'Budaya'] as $cat) {
+        foreach (['', 'all', 'Alam', 'Buatan', 'Budaya'] as $cat) {
             for ($page = 1; $page <= 10; $page++) {
                 Cache::forget("destinasi_{$cat}_page_{$page}");
+                Cache::forget("destinasi_kategori_{$cat}_page_{$page}");
             }
         }
     }

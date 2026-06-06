@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\KriteriaController;
+use App\Http\Controllers\Admin\PenilaianController;
+use App\Http\Controllers\Admin\WisataController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RekomendasiController;
@@ -10,20 +13,25 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/rekomendasi', [RekomendasiController::class, 'proses'])->middleware('auth')->name('rekomendasi.proses');
+
 Route::get('/', function () {
-    $kategori = request('kategori', 'all');
+    // Ambil parameter dari request
+    $kategori = request('kategori', '');
     $page = request('page', 1);
 
-    $cacheKey = "destinasi_{$kategori}_page_{$page}";
+    // Kunci cache unik berdasarkan kategori dan halaman
+    $cacheKey = "destinasi_kategori_{$kategori}_page_{$page}";
 
+    // Simpan di Cache selama 24 jam untuk optimasi kecepatan
     $data = Cache::remember($cacheKey, now()->addHours(24), function () use ($kategori) {
         $query = Wisata::query();
 
+        // Filter kategori jika valid
         if (in_array($kategori, ['Alam', 'Buatan', 'Budaya'])) {
             $query->where('kategori', $kategori);
         }
 
-        $paginator = $query->latest()->paginate(6);
+        $paginator = $query->paginate(6);
 
         return [
             'items' => $paginator->getCollection()->toArray(),
@@ -33,9 +41,10 @@ Route::get('/', function () {
         ];
     });
 
-    // Hidrasi kembali data array mentah menjadi objek model Wisata
+    // Hidrasi kembali data array mentah menjadi Collection objek model Wisata
     $items = Wisata::hydrate($data['items'])->all();
 
+    // Buat ulang Instance Paginator manual
     $destinasi = new LengthAwarePaginator(
         $items,
         $data['total'],
@@ -43,7 +52,7 @@ Route::get('/', function () {
         $data['currentPage'],
         [
             'path' => request()->url(),
-            'query' => request()->query(),
+            'query' => request()->query(), // <-- INI PENTING AGAR FILTER KATEGORI TIDAK HILANG
         ]
     );
 
@@ -76,9 +85,15 @@ Route::get('/dashboard', function (TopsisService $topsisService) {
     return view('dashboard', compact('lastTopsis'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Contoh Area Khusus Admin
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::resource('wisata', WisataController::class)->parameters([
+        'wisata' => 'wisata',
+    ]);
+    Route::get('/kriteria', [KriteriaController::class, 'index'])->name('kriteria.index');
+    Route::post('/kriteria', [KriteriaController::class, 'update'])->name('kriteria.update');
+    Route::get('/penilaian', [PenilaianController::class, 'index'])->name('penilaian.index');
+    Route::post('/penilaian', [PenilaianController::class, 'update'])->name('penilaian.update');
 });
 
 Route::middleware('auth')->group(function () {
