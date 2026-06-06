@@ -1,58 +1,198 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🌿 Explore Banyumas - Sistem Pendukung Keputusan (SPK) Rekomendasi Wisata (TOPSIS)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Explore Banyumas** adalah aplikasi Sistem Pendukung Keputusan (SPK) berbasis web yang dirancang untuk memberikan rekomendasi destinasi wisata di Kabupaten Banyumas secara objektif dan akurat berdasarkan preferensi wisatawan. Sistem ini mengadopsi metode **TOPSIS (Technique for Order of Preference by Similarity to Ideal Solution)**.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🎯 Penjelasan Sistem & Cara Kerja TOPSIS
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Sistem ini memproses perankingan tempat pariwisata berdasarkan **4 Kriteria Utama**:
+1. **C1 - Jarak (Cost)**: Jarak antara titik lokasi saat ini wisatawan (didapat melalui GPS/Peta) ke koordinat tempat wisata. (Dihitung otomatis).
+2. **C2 - Harga Tiket Masuk (Cost)**: Nominal tiket masuk dalam Rupiah.
+3. **C3 - Rating (Benefit)**: Skala penilaian dari 1.0 sampai 5.0.
+4. **C4 - Kelengkapan Fasilitas (Benefit)**: Skala kelengkapan poin fasilitas dari 1 sampai 5.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Alur Kerja Algoritma:
+1. **Input Wisatawan**: Wisatawan memasukkan lokasi geografisnya (GPS/Manual) dan memilih kategori pariwisata (Alam, Buatan, atau Budaya).
+2. **Kalkulasi Jarak (C1)**: Program mendeteksi jarak berkendara riil menggunakan **OSRM API**. Jika API gagal/timeout, sistem secara otomatis beralih menggunakan rumus **Haversine Formula** (jarak lurus koordinat bumi).
+3. **Pembentukan Matriks Keputusan ($X$)**: Menarik data alternatif pariwisata yang sesuai dari database beserta nilai performa (C2, C3, C4) dan menggabungkannya dengan jarak C1 yang telah dikalkulasi.
+4. **Normalisasi Matriks ($R$)**: Menyamakan skala nilai dengan membagi tiap elemen matriks keputusan dengan akar jumlah kuadrat kriteria masing-masing.
+5. **Matriks Ternormalisasi Terbobot ($Y$)**: Mengalikan matriks normalisasi ($R$) dengan bobot kriteria masing-masing yang dapat diatur admin.
+6. **Solusi Ideal Positif ($A^+$) & Negatif ($A^-$)**: Menentukan performa terbaik dan terburuk untuk setiap kriteria.
+7. **Jarak Solusi Ideal ($D^+$ & $D^-$)**: Mengukur jarak Euclidean setiap tempat pariwisata terhadap solusi acuan terbaik ($D^+$) dan terburuk ($D^-$).
+8. **Nilai Preferensi Akhir ($V_i$)**: Menghitung kedekatan relatif alternatif menggunakan rumus:
+   $$V_i = \frac{D^-_i}{D^-_i + D^+_i}$$
+   Nilai $V_i$ berkisar antara 0 sampai 1. Semakin mendekati 1, semakin disarankan tempat wisata tersebut.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 💻 Tech Stack yang Dibutuhkan
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+* **Bahasa Pemrograman**: PHP >= 8.3 & JavaScript (ES6)
+* **Framework Backend**: Laravel 11 / 13
+* **CSS Framework**: Tailwind CSS v4 (Desain Responsif & Premium)
+* **JS Library**: Alpine.js (State Management komponen UI), Leaflet.js (Peta Interaktif)
+* **Database**: MySQL / MariaDB
+* **API Pihak Ketiga**: OpenStreetMap & OSRM API (Kalkulasi Jarak Rute Berkendara)
+* **Paket Tambahan**: Laravel Breeze (Autentikasi & Manajemen Sesi)
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+---
 
-## Agentic Development
+## 📂 Struktur Folder Utama Proyek
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+```text
+projectSPK/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── Admin/                # Controller Panel Kontrol Admin (Wisata, Kriteria, Penilaian)
+│   │   │   ├── AdminController.php   # Controller Statistik Utama Admin
+│   │   │   └── RekomendasiController # Controller Pemicu TOPSIS dari Landing Page
+│   │   └── Middleware/               # Middleware Hak Akses (Role: Admin vs Wisatawan)
+│   ├── Models/                       # Model Database (Wisata, Kriteria, Penilaian, User)
+│   └── Services/
+│       └── TopsisService.php         # Core Engine Algoritma Perhitungan TOPSIS & Jarak
+├── config/                           # Konfigurasi Aplikasi Laravel
+├── database/
+│   ├── migrations/                   # Skema Migrasi Tabel Database
+│   └── seeders/                      # Data Seeder Awal (Kriteria, Tempat Wisata, Akun Pengguna)
+├── public/                           # Aset Statis (Gambar Logo, Ornamen, File Foto yang Diunggah)
+├── resources/
+│   ├── css/
+│   │   └── app.css                   # Entry Point Tailwind CSS
+│   ├── js/
+│   │   └── app.js                    # Entry Point Laravel Vite JS
+│   └── views/                        # Template Blade HTML
+│       ├── admin/                    # View Panel Admin (CRUD Wisata, Bobot Kriteria, Matrix Editor)
+│       ├── auth/                     # View Login, Register, Lupa Password
+│       ├── layouts/                  # Layout Navigasi & Kerangka HTML Utama
+│       ├── dashboard.blade.php       # Dashboard Perhitungan Detail TOPSIS Pengguna
+│       ├── hasil.blade.php           # Hasil List Rekomendasi Destinasi Wisata
+│       └── welcome.blade.php         # Landing Page Utama Aplikasi
+├── routes/
+│   └── web.php                       # Definisi Seluruh Rute URL Aplikasi
+└── storage/                          # Folder Upload Gambar Pariwisata (public/wisata)
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+---
 
-## Contributing
+## 🛠️ Cara Penginstalan (Installation Guide)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Pilih salah satu metode instalasi di bawah ini sesuai dengan lingkungan server lokal yang Anda gunakan:
 
-## Code of Conduct
+### Opsi A: Menggunakan XAMPP atau Laragon (Server Lokal)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Ikuti langkah-langkah urut berikut jika Anda mendeploy proyek di dalam server lokal XAMPP atau Laragon:
 
-## Security Vulnerabilities
+#### 1. Letakkan Folder Proyek di Direktori Web Server
+* **Laragon**: Kloning atau pindahkan folder proyek ini ke `C:\laragon\www\projectSPK`.
+* **XAMPP**: Kloning atau pindahkan folder proyek ini ke `C:\xampp\htdocs\projectSPK`.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+#### 2. Kloning Repositori
+```bash
+git clone https://github.com/dzhabibi05/Explore-Banyumas.git
+cd Explore-Banyumas
+```
 
-## License
+#### 3. Aktifkan Apache & MySQL
+* Buka **Laragon** atau **XAMPP Control Panel**.
+* Klik tombol **Start / Start All** untuk menjalankan layanan **Apache** dan **MySQL**.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+#### 4. Pasang Dependensi Proyek
+Buka terminal (Command Prompt / Git Bash) di dalam direktori folder proyek Anda (`C:\laragon\www\projectSPK` atau `C:\xampp\htdocs\projectSPK`), lalu jalankan:
+```bash
+composer install
+npm install
+```
+
+#### 5. Konfigurasi Lingkungan (.env)
+* Salin berkas `.env.example` menjadi `.env`:
+  ```bash
+  cp .env.example .env
+  ```
+* Buka file `.env` menggunakan text editor, lalu sesuaikan konfigurasi database MySQL:
+  ```env
+  DB_CONNECTION=mysql
+  DB_HOST=127.0.0.1
+  DB_PORT=3306
+  DB_DATABASE=db_explore_banyumas
+  DB_USERNAME=root
+  DB_PASSWORD=
+  ```
+
+#### 6. Buat Database Baru
+* Buka browser dan akses **phpMyAdmin** (`http://localhost/phpmyadmin`) atau buka **HeidiSQL**.
+* Buat database baru bernama **`db_explore_banyumas`**.
+
+#### 7. Jalankan Key Generator, Migrasi, & Seeder Database
+Kembali ke terminal proyek Anda, lalu jalankan rentetan perintah berikut secara berurutan:
+```bash
+php artisan key:generate
+php artisan migrate --seed
+```
+*Perintah ini akan membuat skema tabel dan mengisi data master awal kriteria, destinasi wisata, serta akun admin/wisatawan.*
+
+#### 8. Hubungkan Storage Link
+Jalankan perintah berikut agar foto wisata yang diunggah dapat diakses oleh publik:
+```bash
+php artisan storage:link
+```
+
+---
+
+### Opsi B: Menggunakan Laravel Dev Server (PHP CLI)
+
+Ikuti langkah-langkah berikut jika Anda ingin menjalankan aplikasi menggunakan terminal/PHP CLI murni secara independen:
+
+1. **Kloning Proyek**:
+   ```bash
+   git clone https://github.com/dzhabibi05/Explore-Banyumas.git
+   cd Explore-Banyumas
+   ```
+2. **Install Dependensi**:
+   ```bash
+   composer install
+   npm install
+   ```
+3. **Setup `.env`**:
+   Salin `.env.example` ke `.env` lalu sesuaikan kredensial database SQL Anda.
+4. **Key, Migrasi, Seeder, & Storage Link**:
+   ```bash
+   php artisan key:generate
+   php artisan migrate --seed
+   php artisan storage:link
+   ```
+
+---
+
+## 🚀 Cara Menjalankan Aplikasi
+
+### Jika Menggunakan Opsi A (XAMPP / Laragon):
+Aplikasi Anda sudah otomatis dijalankan oleh Apache. Anda hanya perlu membuka browser dan mengakses URL berikut:
+* **Laragon**: `http://projectSPK.test` (Laragon Virtual Host otomatis)
+* **XAMPP**: `http://localhost/projectSPK/public`
+* *Penting: Tetap buka terminal proyek dan jalankan `npm run dev` untuk mengompilasi style Tailwind CSS.*
+
+### Jika Menggunakan Opsi B (PHP CLI):
+1. Jalankan server lokal Laravel:
+   ```bash
+   php artisan serve
+   ```
+2. Jalankan compiler Vite:
+   ```bash
+   npm run dev
+   ```
+3. Buka browser dan akses: `http://127.0.0.1:8000`
+
+---
+
+## 🔑 Akun Pengujian Default (Login Credentials)
+
+Masuk ke panel menggunakan akun hasil *seeding* berikut:
+
+* **Akun Administrator**:
+  * Email: `admin@gmail.com`
+  * Password: `password`
+* **Akun Wisatawan**:
+  * Email: `test@example.com`
+  * Password: `password`
